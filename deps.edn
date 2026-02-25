@@ -1,13 +1,15 @@
 {:paths ["src"]
  :tools/usage {:ns-default jibbit.core
                :ns-aliases {jib jibbit.core}}
- :deps {io.github.clojure/tools.build {:mvn/version "0.10.3" :exclusions [com.google.guava/guava]}
-        com.google.cloud.tools/jib-core {:mvn/version "0.27.0"}
-        com.cognitect.aws/api {:mvn/version "0.8.692"}
-        com.cognitect.aws/ecr {:mvn/version "857.2.1574.0"}}
- :aliases {:test 
+ :deps {io.github.clojure/tools.build {:mvn/version "0.10.12"}
+        com.google.cloud.tools/jib-core {:mvn/version "0.28.1"}
+        com.cognitect.aws/api {:mvn/version "0.8.800"}
+        com.cognitect.aws/ecr {:mvn/version "871.2.42.0"}
+        com.google.guava/guava {:mvn/version "33.5.0-jre"}  ; Override to get rid of Unsafe warning
+        }
+ :aliases {:test
            {:extra-deps {com.magnars/test-with-files {:mvn/version "2021-02-17"}
-                         org.apache.commons/commons-vfs2 {:mvn/version "2.9.0"}
+                         org.apache.commons/commons-vfs2 {:mvn/version "2.10.0"}
                          io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
             :extra-paths ["test"]
             :main-opts ["-m" "cognitect.test-runner"]

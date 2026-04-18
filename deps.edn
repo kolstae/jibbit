@@ -1,11 +1,11 @@
 {:paths ["src"]
  :tools/usage {:ns-default jibbit.core
                :ns-aliases {jib jibbit.core}}
- :deps {io.github.clojure/tools.build {:mvn/version "0.10.12"}
+ :deps {io.github.clojure/tools.build {:mvn/version "0.10.13"}
         com.google.cloud.tools/jib-core {:mvn/version "0.28.1"}
-        com.cognitect.aws/api {:mvn/version "0.8.800"}
-        com.cognitect.aws/ecr {:mvn/version "871.2.42.0"}
-        com.google.guava/guava {:mvn/version "33.5.0-jre"}  ; Override to get rid of Unsafe warning
+        com.cognitect.aws/api {:mvn/version "0.8.824"}
+        com.cognitect.aws/ecr {:mvn/version "871.2.42.34"}
+        com.google.guava/guava {:mvn/version "33.6.0-jre"}  ; Override to get rid of Unsafe warning
         }
  :aliases {:test
            {:extra-deps {com.magnars/test-with-files {:mvn/version "2021-02-17"}

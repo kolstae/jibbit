@@ -5,6 +5,8 @@
         com.google.cloud.tools/jib-core {:mvn/version "0.28.1"}
         com.cognitect.aws/api {:mvn/version "0.8.824"}
         com.cognitect.aws/ecr {:mvn/version "871.2.42.34"}
+        com.cognitect.aws/endpoints {:mvn/version "871.2.42.29"}
+        com.cognitect.aws/sts {:mvn/version "871.2.39.3"}
         com.google.guava/guava {:mvn/version "33.6.0-jre"}  ; Override to get rid of Unsafe warning
         }
  :aliases {:test

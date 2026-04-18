@@ -4,6 +4,24 @@
             [cognitect.aws.credentials :as credentials]
             [cognitect.aws.util :as util]))
 
+(defn sts-provider [credentials-config]
+  (let [client (doto (aws/client (merge {:api :sts
+                                         :credentials-provider (reify credentials/CredentialsProvider
+                                                                 (fetch [_] {}))}
+                                        (select-keys credentials-config [:region])))
+                 (aws/validate-requests))]
+    (credentials/cached-credentials-with-auto-refresh
+      (reify credentials/CredentialsProvider
+        (fetch [_]
+          (let [response (aws/invoke client {:op (:sts/op credentials-config)
+                                             :request (:sts/request credentials-config)})]
+            (if-some [creds (:Credentials response)]
+              {:aws/access-key-id (:AccessKeyId creds)
+               :aws/secret-access-key (:SecretAccessKey creds)
+               :aws/session-token (:SessionToken creds)
+               ::credentials/ttl (credentials/calculate-ttl creds)}
+              (throw (ex-info "sts failed" {:response response, :credentials-config credentials-config})))))))))
+
 (defn get-client [api credentials-config]
   (if-let [crp (case (:type credentials-config)
                  :access-key
@@ -16,7 +34,10 @@
                  (credentials/profile-credentials-provider (:profile-name credentials-config))
 
                  :environment
-                 (credentials/environment-credentials-provider))]
+                 (credentials/environment-credentials-provider)
+
+                 :sts
+                 (sts-provider (select-keys credentials-config [:sts/op :sts/request :region])))]
     (aws/client (merge {:api api :credentials-provider crp}
                        (select-keys credentials-config [:region])))
     (aws/client {:api api})))

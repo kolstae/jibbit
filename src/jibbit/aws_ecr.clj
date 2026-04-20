@@ -20,7 +20,7 @@
                :aws/secret-access-key (:SecretAccessKey creds)
                :aws/session-token (:SessionToken creds)
                ::credentials/ttl (credentials/calculate-ttl creds)}
-              (throw (ex-info "sts failed" {:response response, :credentials-config credentials-config})))))))))
+              response)))))))
 
 (defn get-client [api credentials-config]
   (if-let [crp (case (:type credentials-config)
